@@ -32,7 +32,9 @@ function setup(){
 	darkmode = false;
 	goal = 0;
 	work = 0;
-
+	update()
+}
+function update(){
 	allcookiedata = document.cookie;
 	console.log("allcookiedata",allcookiedata);
 
@@ -74,7 +76,7 @@ function setup(){
 
 
 	weektext = ["This week:", "Last week", "Week 3", "Week 4" ,"Week 5"];
-	for(u = 1; u < 6; u++){
+	for(u = 1; u < 5; u++){
 		draw_outline((X/2)-(X/6)*pow(-1,u),400 + 200*((u-1)+(u-2)));
 
  	}
@@ -190,10 +192,13 @@ function windowResized() {
 	else{
 		X = X-40;
 	}
-  	resizeCanvas(X,Y);}
+  	resizeCanvas(X,Y);
+  	update();
+  }
 
 
 function draw(){
-	frameRate(1);
+	frameRate(0.01);
+	update();
 
 }
