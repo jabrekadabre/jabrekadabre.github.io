@@ -3,6 +3,7 @@ X = 1080-40;
 Y = 2010;
 times = [];
 
+work = 0;
 
 
 function setup(){
@@ -31,7 +32,6 @@ function setup(){
 	windowResized()
 	darkmode = false;
 	goal = 0;
-	work = 0;
 	update()
 }
 function update(){
