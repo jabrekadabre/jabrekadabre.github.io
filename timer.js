@@ -65,7 +65,10 @@ function setup(){
 
 
 	button2.mouseOver(b4);
-	delo();
+	a = checkcookie();
+	if (a == []){
+		delo();
+	}
 	wk = 0;
 	wrn = false;
 	wst = false;
@@ -74,6 +77,21 @@ function setup(){
 	goal = 0;
 	windowResized();
 
+}
+
+function checkcookie(){
+	weekdata = readcookie();
+	if(weekdata.length != 0){
+		if( weekdata[weekdata.length-1].substr(0,daymonth.length) == daymonth){ // cookie already exists
+			a = weekdata[weekdata.length-1].substr(11, weekdata[weekdata.length-1].length).split(':').map(Number);
+		}
+
+	}
+	else{
+		a = []
+	}
+	console.log("here comes the load from cookie part",a);
+	return a;
 }
 
 function aboutpage(){
@@ -138,6 +156,14 @@ function darkmode(){
 
 
 }
+window.onbeforeunload = function () {
+	console.log("onbeforeunload");
+	if (wrn == false){
+  		delo();
+	}
+    delo(); //two times, so that the timer state doesnt change
+    ;
+};
 
 function delo(){
 	d = new Date();
@@ -151,10 +177,11 @@ function delo(){
 
 }
 
-function createcookie(){
+function readcookie(){
+	d = new Date();
 	weekdata = [];
 	month = d.getMonth();
-	day = d.getDate() -9;
+	day = d.getDate() - 0;
 	year = d.getFullYear();
 	daymonth = addZero(month).toString()+"/"+addZero(day).toString()+"/"+year.toString()+'!';
 	console.log("daymonth:",daymonth);
@@ -166,6 +193,17 @@ function createcookie(){
 		weekdata = (cookie.substr(4,cookie.length-1)).split('|');}
 
 	console.log(weekdata);
+	return weekdata;
+}
+
+function createcookie(){
+	weekdata = readcookie();
+	while (weekdata.length > 28){
+		weekdata.shift();
+		console.log("28days of data reched");
+	}
+
+
 	if (weekdata.length != 0){
 		if( weekdata[weekdata.length-1].substr(0,daymonth.length) == daymonth){ // check if the last imput from a cookie is from today, if it is, than edit it, else creat it
 			console.log("it already exist");
