@@ -283,14 +283,12 @@ function draw() {
 	text(addZero(hour)+":"+addZero(minute)+":"+addZero(sec), X/2.35, 40);
 	noStroke()
 	ctime = hour*60 +minute;
-
+	if (ctime == 1439 && a[a.length-1] != 1439){ // well if you dent save your progress yet, here you go, one minute before midnight
+		delo();}
 	for (i = 0; i < a.length; i++){
 		if (a[i] > ctime){ // midnight!! weird bugs appear when clock jumps to 0, so the page just reloads
-			a.push(1439); //we already know that this is the last minute of the day, so no need to call delo() to create a time stamp
-			createcookie();
 			a = [0]; // now reset it, so that this doesnt get called 100 times a second (because it did for some reason)
 			window.location.reload(false);
-
 			} //this was added, since it wasnt able to refresh.. to many request per second..
 		if (i == 0 && a[i] != 0){ // draw arc from the start of the day to the first time stamp  it must not be zero since that's midnight, and 0 to 0 draws a full circle
 			stroke(WHITE);
